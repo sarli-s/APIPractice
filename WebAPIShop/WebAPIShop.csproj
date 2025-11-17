@@ -14,4 +14,9 @@
     <None Include="F:\WebAPIShop\נשאר TRY ולידציה מייל לנקות\WebAPIShop\WebAPIShop\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Entities\Entities.csproj" />
+    <ProjectReference Include="..\Serveres\Serveres.csproj" />
+  </ItemGroup>
+
 </Project>
