@@ -3,9 +3,9 @@ using Entities;
 
 namespace Repositories
 {
-    public class userRepositiory
+    public class UserRepository
     {
-        string filePath = "M:\\API\\סופי\\users.txt";
+        private readonly string _filePath = "users.txt";
         //public User Get()
         //{
         //    return new string[] { "value1", "value2" };
@@ -13,7 +13,7 @@ namespace Repositories
 
         public User GetUserById(int id)
         {
-            using (StreamReader reader = System.IO.File.OpenText(filePath))
+            using (StreamReader reader = System.IO.File.OpenText(_filePath))
             {
                 string? currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
@@ -28,35 +28,34 @@ namespace Repositories
 
         public User AddUser(User user)
         {
-            int numberOfUsers = System.IO.File.ReadLines(filePath).Count();
+            int numberOfUsers = System.IO.File.ReadLines(_filePath).Count();
             user.UserId = numberOfUsers + 1;
             string userJson = JsonSerializer.Serialize(user);
-            System.IO.File.AppendAllText(filePath, userJson + Environment.NewLine);
+            System.IO.File.AppendAllText(_filePath, userJson + Environment.NewLine);
 
             return  user;
         }
 
 
-        public User Login(LoginUser UserR)
-{
-
-            using (StreamReader reader = System.IO.File.OpenText(filePath))
+        public User Login(LoginUser loginUser)
+        {
+            using (StreamReader reader = System.IO.File.OpenText(_filePath))
             {
                 string? currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
                 {
-                    User userT = JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (userT.UserEmail == UserR.LoginUserEmail && userT.UserPassword == UserR.LoginUserPassword)
-                        return userT;
+                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
+                    if (user.UserEmail == loginUser.LoginUserEmail && user.UserPassword == loginUser.LoginUserPassword)
+                        return user;
                 }
             }
-            return null;   /////
+            return null;
         }
 
         public void UpdateUserDetails(int id, User value)
         {
             string textToReplace = string.Empty;
-            using (StreamReader reader = System.IO.File.OpenText(filePath))
+            using (StreamReader reader = System.IO.File.OpenText(_filePath))
             {
                 string currentUserInFile;
                 while ((currentUserInFile = reader.ReadLine()) != null)
@@ -70,9 +69,9 @@ namespace Repositories
 
             if (textToReplace != string.Empty)
             {
-                string text = System.IO.File.ReadAllText(filePath);
+                string text = System.IO.File.ReadAllText(_filePath);
                 text = text.Replace(textToReplace, JsonSerializer.Serialize(value));
-                System.IO.File.WriteAllText(filePath, text);
+                System.IO.File.WriteAllText(_filePath, text);
             }
 
         }

@@ -5,31 +5,31 @@ namespace Serveres
 {
     public class UserServer
     {
-        userRepositiory repositiory = new userRepositiory();
+        private readonly UserRepository _repository = new UserRepository();
 
         public User GetUserById(int id)
         {
-            return repositiory.GetUserById(id);
+            return _repository.GetUserById(id);
         }
 
         public User AddUser(User user)
         {
-            return repositiory.AddUser(user);
+            return _repository.AddUser(user);
         }
 
         public void UpdateUserDetails(int id, User value)
         {
-            repositiory.UpdateUserDetails(id, value);
+            _repository.UpdateUserDetails(id, value);
         }
 
-        public User Login(LoginUser UserR)
+        public User Login(LoginUser loginUser)
         {
-            return repositiory.Login(UserR);
+            return _repository.Login(loginUser);
         }
 
         public void DeleteUser(int id)
         {
-            repositiory.DeleteUser(id);
+            _repository.DeleteUser(id);
         }
     }
 

@@ -10,13 +10,13 @@ namespace Serveres
 {
     public class PasswordServer
     {
-        public Password checkPassword(string passwordGet)
+        public Password CheckPassword(string passwordValue)
         {
             Password password = new Password();
-            password.PasswordItself=passwordGet;
+            password.PasswordItself = passwordValue;
             var result = Zxcvbn.Core.EvaluatePassword(password.PasswordItself);
             password.Level = result.Score;
             return password;
         }
-}
+    }
 }
