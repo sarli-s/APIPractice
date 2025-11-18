@@ -12,8 +12,7 @@ namespace WebAPIShop.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
-        UserServer server = new UserServer();
+        private readonly UserServer _server = new UserServer();
 
         //[HttpGet]
         //public IEnumerable<string> Get()
@@ -23,19 +22,19 @@ namespace WebAPIShop.Controllers
       
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id) {
-            User user =server.GetUserById(id);
+            User user = _server.GetUserById(id);
             if(user != null)
             {
                 return Ok(user);
             }
-            return NoContent(); 
+            return NotFound(); 
         }
 
   
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-            User creatingUser = server.AddUser(user);
+            User creatingUser = _server.AddUser(user);
 
             return CreatedAtAction(nameof(Get), new
             {
@@ -45,28 +44,27 @@ namespace WebAPIShop.Controllers
 
 
         [HttpPost("login")]
-        public ActionResult<User> Post([FromBody] LoginUser UserR)
+        public ActionResult<User> Post([FromBody] LoginUser loginUser)
         {
-
-            User loginUser = server.Login(UserR);
-            if (loginUser != null)
+            User user = _server.Login(loginUser);
+            if (user != null)
             {
-                return CreatedAtAction(nameof(Get), new { id = loginUser.UserId }, loginUser);
+                return Ok(user);
             }
 
-            return NoContent();  
+            return Unauthorized();  
         }
        
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] User value)
         {
-            server.UpdateUserDetails(id, value);
+            _server.UpdateUserDetails(id, value);
         }
 
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            server.DeleteUser(id);
+            _server.DeleteUser(id);
         }
     }
 }
