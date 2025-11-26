@@ -5,7 +5,7 @@ namespace Serveres
 {
     public class UserServer
     {
-        userRepositiory repositiory = new userRepositiory();
+        private readonly userRepositiory repositiory = new userRepositiory();
 
         public User GetUserById(int id)
         {
@@ -25,11 +25,6 @@ namespace Serveres
         public User Login(LoginUser UserR)
         {
             return repositiory.Login(UserR);
-        }
-
-        public void DeleteUser(int id)
-        {
-            repositiory.DeleteUser(id);
         }
     }
 

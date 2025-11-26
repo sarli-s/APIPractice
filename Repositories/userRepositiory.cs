@@ -5,11 +5,7 @@ namespace Repositories
 {
     public class userRepositiory
     {
-        string filePath = "M:\\API\\סופי\\users.txt";
-        //public User Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        private readonly string filePath = Path.Combine(Directory.GetCurrentDirectory(), "users.txt");
 
         public User GetUserById(int id)
         {
@@ -75,10 +71,6 @@ namespace Repositories
                 System.IO.File.WriteAllText(filePath, text);
             }
 
-        }
-
-        public void DeleteUser(int id)
-        {
         }
     }
 }

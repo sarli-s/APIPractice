@@ -6,41 +6,16 @@ using Serveres;
 
 namespace WebAPIShop.Controllers
 {
-    public class PasswordController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PasswordController : ControllerBase
     {
 
-        PasswordServer server = new PasswordServer();
-
-        //[Route("api/[controller]")]
-
-        //[HttpGet]
-        //public ActionResult<Password> Get()
-        //{
-        //    Password password = new Password() { PasswordItself = "123" };
-        //    if (password != null)
-        //    {
-        //        return Ok(password);
-        //    }
-        //    return NoContent();
-        //}
-        [Route("api/[controller]")]
+        private readonly PasswordServer server = new PasswordServer();
 
         [HttpPost]
         public ActionResult<Password> Post([FromBody] Password password)
         {
             password= server.checkPassword(password.PasswordItself);
             return Ok(password);
-            //Password creatingPassword = password;
-
-            //return CreatedAtAction(nameof(Get), new
-            //{
-            //    id = creatingPassword.PasswordItself
-            //}, creatingPassword);
         }
-       
-
-
-
-
-    }
-}
