@@ -13,13 +13,7 @@ namespace WebAPIShop.Controllers
     public class UsersController : ControllerBase
     {
 
-        UserServer server = new UserServer();
-
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        private readonly UserServer server = new UserServer();
       
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id) {
@@ -28,7 +22,7 @@ namespace WebAPIShop.Controllers
             {
                 return Ok(user);
             }
-            return NoContent(); 
+            return NotFound(); 
         }
 
   
@@ -51,10 +45,10 @@ namespace WebAPIShop.Controllers
             User loginUser = server.Login(UserR);
             if (loginUser != null)
             {
-                return CreatedAtAction(nameof(Get), new { id = loginUser.UserId }, loginUser);
+                return Ok(loginUser);
             }
 
-            return NoContent();  
+            return Unauthorized();  
         }
        
         [HttpPut("{id}")]
@@ -63,10 +57,5 @@ namespace WebAPIShop.Controllers
             server.UpdateUserDetails(id, value);
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            server.DeleteUser(id);
-        }
     }
 }
